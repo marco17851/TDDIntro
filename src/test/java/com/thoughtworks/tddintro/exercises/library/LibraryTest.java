@@ -1,7 +1,6 @@
 package com.thoughtworks.tddintro.exercises.library;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -13,9 +12,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.contains;
+import static org.mockito.Mockito.*;
 
 public class LibraryTest {
     private List<String> books;
@@ -32,7 +30,6 @@ public class LibraryTest {
     }
 
     @Test
-    @Ignore // Remove each @Ignore and implement test
     public void shouldPrintBookTitleWhenThereIsOneBook() {
         String title = "Book Title";
         books.add(title);
@@ -40,19 +37,30 @@ public class LibraryTest {
         library.listBooks();
 
         // add a verify statement here that shows that the book title was printed by the printStream
+        verify(printStream).println(contains(title));
     }
 
     @Test
-    @Ignore // Remove each @Ignore and implement test
     public void shouldPrintNothingWhenThereAreNoBooks() {
 
         // implement me
+        library.listBooks();
+        verify(printStream).println("");
     }
 
     @Test
-    @Ignore // Remove each @Ignore and implement test
     public void shouldPrintBothBookTitlesWhenThereAreTwoBooks() throws IOException {
         // implement me
+        String title_harry = "Harry";
+        String title_potter = "Potter";
+
+        books.add(title_harry);
+        books.add(title_potter);
+
+        library.listBooks();
+
+        verify(printStream).println(title_harry + "\n" + title_potter + "\n");
+
     }
 
     @Test
@@ -63,9 +71,9 @@ public class LibraryTest {
     }
 
     @Test
-    @Ignore // Remove each @Ignore and implement test
     public void shouldDeleteBookFromCollectionWhenRemovedByUser() throws IOException {
         // Add when/thenReturn here
+        when(bufferedReader.readLine()).thenReturn("The Two Towers");
 
         books.add("The Two Towers");
         library.removeBook();
