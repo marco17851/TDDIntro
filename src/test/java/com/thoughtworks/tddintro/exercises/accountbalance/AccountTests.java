@@ -1,47 +1,33 @@
 package com.thoughtworks.tddintro.exercises.accountbalance;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.PrintStream;
+import static org.junit.Assert.assertEquals;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class AccountTests {
 
-    private PrintStream printStream;
-
-    @Before
-    public void setUp() throws Exception {
-        printStream = mock(PrintStream.class);
-    }
-
     @Test
     public void shouldIncreaseMyBalanceWhenIDepositMoney(){
-        Account account = new Account(printStream, 100);
+        Account account = new Account(100);
         account.deposit(50);
-        account.checkBalance();
 
-        verify(printStream).println(150);
-
+        assertEquals(150, account.checkBalance());
     }
 
     @Test
     public void shouldDecreaseMyBalanceWhenIWithdrawMoney(){
-        Account account = new Account(printStream, 100);
+        Account account = new Account(100);
         account.withdraw(50);
-        account.checkBalance();
 
-        verify(printStream).println(50);
+        assertEquals(50, account.checkBalance());
     }
 
     @Test
     public void shouldNotDecreaseMyBalanceWhenIWithdrawMoneyAndDoNotHaveEnoughToCoverTheWithdrawal(){
-        Account account = new Account(printStream, 50);
+        Account account = new Account(50);
         account.withdraw(100);
-        account.checkBalance();
 
-        verify(printStream).println(50);
+        assertEquals(50, account.checkBalance());
     }
 }
